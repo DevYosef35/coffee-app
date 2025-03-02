@@ -3,7 +3,7 @@
 ## 📱 Proje Hakkında
 
 Coffee App, modern ve kullanıcı dostu bir kahve sipariş uygulamasıdır. Flutter kullanılarak geliştirilmiş olup, kahve severlere çeşitli kahve seçenekleri sunar.
-
+![Untitled](https://github.com/user-attachments/assets/be46524b-d872-4029-9abd-ca3b15e80e8a)
 ## 🚀 Özellikler
 
 - Farklı kahve çeşitleri (Latte, Americano, Mocha vb.)
