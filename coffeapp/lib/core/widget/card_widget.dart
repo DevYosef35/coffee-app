@@ -1,5 +1,8 @@
 import 'package:coffeapp/core/utility/constant/color_constant.dart';
+import 'package:coffeapp/core/utility/constant/string_constant.dart';
+import 'package:coffeapp/core/widget/chip_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CardWidget extends StatefulWidget {
   const CardWidget(
@@ -16,6 +19,9 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
+  final List<String> categories = ["küçük", "orta", "nüyük"];
+  String selectedCategory = "küçük";
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -49,9 +55,39 @@ class _CardWidgetState extends State<CardWidget> {
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
-                  builder: (BuildContext context) {
-                    return Container(
-                      color: ColorConstants.offWhite,
+                  builder: (context) {
+                    return StatefulBuilder(
+                      builder: (context, setModalState) {
+                        return Column(
+                          children: [
+                            Image.asset("assets/americano_coffe_cup.jpg"),
+                            Text(
+                              "Americano",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      color: ColorConstants.darkBrown,
+                                      fontWeight: FontWeight.w700),
+                            ),
+                            Wrap(
+                              spacing: 8.0,
+                              children: categories.map((category) {
+                                return ChipWidget(
+                                  label: category,
+                                  isSelected: selectedCategory == category,
+                                  onSelected: (bool selected) {
+                                    // Artık içte tanımlanan fonksiyona gerek yok, direkt setModalState kullanıyoruz.
+                                    setModalState(() {
+                                      selectedCategory = category;
+                                    });
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                 );
@@ -60,7 +96,7 @@ class _CardWidgetState extends State<CardWidget> {
                   backgroundColor:
                       MaterialStateProperty.all(ColorConstants.darkBrown),
                   minimumSize: MaterialStateProperty.all(Size(100, 40))),
-              child: Text("Ekle",
+              child: Text(AppStrings.buttonText,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
