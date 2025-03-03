@@ -1,9 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coffeapp/core/utility/constant/padding_constant.dart';
 import 'package:coffeapp/core/utility/theme/app_theme_data.dart';
-import 'package:coffeapp/core/widget/card_widget.dart';
-import 'package:coffeapp/core/widget/chip_widget.dart';
+import 'package:coffeapp/view/components/organism/card_widget.dart';
+import 'package:coffeapp/view/components/atoms/chip_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'components/molecules/promotion_banner.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -79,20 +80,5 @@ class CoffeListView extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class PromotionBanner extends StatelessWidget {
-  const PromotionBanner({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-        items: [Image.asset("assets/promation_banner.png")],
-        options: CarouselOptions(
-          height: MediaQuery.of(context).size.height * 0.3,
-        ));
   }
 }
