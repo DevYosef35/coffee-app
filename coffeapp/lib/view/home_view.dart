@@ -4,7 +4,6 @@ import 'package:coffeapp/core/utility/theme/app_theme_data.dart';
 import 'package:coffeapp/core/widget/card_widget.dart';
 import 'package:coffeapp/core/widget/chip_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -26,21 +25,7 @@ class _HomeViewState extends State<HomeView> {
           children: [
             const PromotionBanner(),
             _filtrationButtons(context),
-            Expanded(
-              child: GridView.builder(
-                scrollDirection: Axis.vertical,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 0.9),
-                itemCount: 22,
-                itemBuilder: (BuildContext context, int index) {
-                  return const CardWidget(
-                    imgPath: "assets/americano_coffe_cup.jpg",
-                    coffeName: "Americano",
-                    coffePrice: 1,
-                  );
-                },
-              ),
-            ),
+            const CoffeListView(),
           ],
         ),
       ),
@@ -65,6 +50,31 @@ class _HomeViewState extends State<HomeView> {
                 selectedCategory = category;
               });
             },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CoffeListView extends StatelessWidget {
+  const CoffeListView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GridView.builder(
+        scrollDirection: Axis.vertical,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 0.9),
+        itemCount: 22,
+        itemBuilder: (BuildContext context, int index) {
+          return const CardWidget(
+            imgPath: "assets/americano_coffe_cup.jpg",
+            coffeName: "Americano",
+            coffePrice: 1,
           );
         },
       ),

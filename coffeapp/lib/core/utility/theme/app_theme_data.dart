@@ -1,6 +1,5 @@
 import 'package:coffeapp/core/utility/constant/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppTheme {
   static EdgeInsets getSafePadding(BuildContext context) {
