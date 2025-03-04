@@ -1,5 +1,8 @@
 import 'package:coffeapp/core/utility/constant/padding_constant.dart';
 import 'package:coffeapp/core/utility/theme/app_theme_data.dart';
+import 'package:coffeapp/image_extension.dart';
+import 'package:coffeapp/model/coffe_model.dart';
+import 'package:coffeapp/view/components/atoms/custom_spacer_widget.dart';
 import 'package:coffeapp/view/components/organism/card_widget.dart';
 import 'package:coffeapp/view/components/atoms/chip_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,13 @@ class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
+
+List<Coffee> coffeeList = [
+  Coffee(name: 'Espresso', price: 2),
+  Coffee(name: 'Latte', price: 3),
+  Coffee(name: 'Cappuccino', price: 3),
+  // Diğer kahve çeşitlerini buraya ekleyebilirsiniz
+];
 
 class _HomeViewState extends State<HomeView> {
   final List<String> categories = ["All", "Latte", "Americano", "Mocha"];
@@ -40,18 +50,10 @@ class _HomeViewState extends State<HomeView> {
         padding: PaddingConstant.chipSpacing,
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 8),
+        separatorBuilder: (context, index) => const CustomSpacer(),
         itemBuilder: (BuildContext context, int index) {
           final category = categories[index];
-          return ChipWidget(
-            label: category,
-            isSelected: selectedCategory == category,
-            onSelected: (bool selected) {
-              setState(() {
-                selectedCategory = category;
-              });
-            },
-          );
+          return ChipWidget(label: category, category: category);
         },
       ),
     );
@@ -70,12 +72,13 @@ class CoffeListView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 0.9),
-        itemCount: 22,
+        itemCount: coffeeList.length,
         itemBuilder: (BuildContext context, int index) {
-          return const CardWidget(
-            imgPath: "assets/americano_coffe_cup.jpg",
-            coffeName: "Americano",
-            coffePrice: 1,
+          final coffee = coffeeList[index];
+          return CardWidget(
+            imgPath: 'assets/${coffee.name.toLowerCase()}_coffe_cup.jpg',
+            coffeName: coffee.name,
+            coffePrice: coffee.price,
           );
         },
       ),

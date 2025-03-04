@@ -21,13 +21,10 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<CardViewModel>(
-      create: (_) => CardViewModel(),
-      child: _CardWidgetBody(
-        coffeName: coffeName,
-        coffePrice: coffePrice,
-        imgPath: imgPath,
-      ),
+    return _CardWidgetBody(
+      coffeName: coffeName,
+      coffePrice: coffePrice,
+      imgPath: imgPath,
     );
   }
 }
@@ -75,15 +72,20 @@ class _CardWidgetBody extends StatelessWidget {
                       fontWeight: FontWeight.bold))
             ],
           ),
-          CardAddButton(onPress: (BuildContext context) {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return CoffeDetailsBottomSheet(
-                    coffeType: coffeName, imgCoffe: imgPath);
-              },
-            );
-          })
+          CardAddButton(
+            onPress: (BuildContext context) {
+              viewModel.updateCoffeeType(coffeName);
+              viewModel.updateCoffeePrice(coffePrice);
+              viewModel.updateImgPath(imgPath);
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return CoffeDetailsBottomSheet(
+                      coffeType: coffeName, imgCoffe: imgPath);
+                },
+              );
+            },
+          )
         ],
       ),
     );

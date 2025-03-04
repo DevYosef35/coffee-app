@@ -1,25 +1,27 @@
+import 'package:coffeapp/viewmodel/card_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ChipWidget extends StatefulWidget {
-  const ChipWidget(
-      {super.key,
-      required this.label,
-      required this.isSelected,
-      required this.onSelected});
+class ChipWidget extends StatelessWidget {
+  const ChipWidget({super.key, required this.label, required this.category});
 
   final String label;
-  final bool isSelected;
-  final ValueChanged<bool> onSelected;
-  @override
-  State<ChipWidget> createState() => _CustomChipState();
-}
+  final String category;
 
-class _CustomChipState extends State<ChipWidget> {
   @override
   Widget build(BuildContext context) {
+    final cardViewModel = Provider.of<CardViewModel>(context);
+
     return ChoiceChip(
-        label: Text(widget.label),
-        selected: widget.isSelected,
-        onSelected: widget.onSelected);
+      label: Text(label),
+      selected: cardViewModel.selectedCategory ==
+          category, // Seçili durumu kontrol et
+      onSelected: (selected) {
+        if (selected) {
+          cardViewModel
+              .updateSelectedCategory(category); // Seçili çipi güncelle
+        }
+      },
+    );
   }
 }
