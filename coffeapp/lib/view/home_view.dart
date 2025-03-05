@@ -1,13 +1,8 @@
-import 'package:coffeapp/core/utility/constant/padding_constant.dart';
-import 'package:coffeapp/core/utility/theme/app_theme_data.dart';
-import 'package:coffeapp/image_extension.dart';
-import 'package:coffeapp/model/coffe_model.dart';
-import 'package:coffeapp/view/components/atoms/custom_spacer_widget.dart';
-import 'package:coffeapp/view/components/organism/card_widget.dart';
-import 'package:coffeapp/view/components/atoms/chip_widget.dart';
+import 'package:coffeapp/view/components/components.dart';
+import 'package:coffeapp/core/utility/utility.dart';
+import 'package:coffeapp/viewmodel/coffe_list_provider.dart';
+import 'package:coffeapp/viewmodel/home_view_model.dart';
 import 'package:flutter/material.dart';
-
-import 'components/molecules/promotion_banner.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,23 +11,29 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-List<Coffee> coffeeList = [
-  Coffee(name: 'Espresso', price: 2),
-  Coffee(name: 'Latte', price: 3),
-  Coffee(name: 'Cappuccino', price: 3),
-  // Diğer kahve çeşitlerini buraya ekleyebilirsiniz
-];
-
-class _HomeViewState extends State<HomeView> {
-  final List<String> categories = ["All", "Latte", "Americano", "Mocha"];
-  String selectedCategory = "All";
+class _HomeViewState extends State<HomeView> with HomeViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const _FloatingActionButton(),
+      bottomNavigationBar: BottomNavigationBar(
+          onTap: (index) {
+            onItemTapped(index);
+          },
+          currentIndex: selectedIndex,
+          selectedItemColor: ColorConstants.beige,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), label: "Cart"),
+          ]),
       body: Padding(
         padding: AppTheme.getSafePadding(context),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const PromotionBanner(),
             _filtrationButtons(context),
@@ -50,11 +51,27 @@ class _HomeViewState extends State<HomeView> {
         padding: PaddingConstant.chipSpacing,
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        separatorBuilder: (context, index) => const CustomSpacer(),
+        separatorBuilder: (context, index) => const SizedBox(
+            width: 8.0), // Chip'ler arasındaki boşluğu 8.0 olarak ayarla
         itemBuilder: (BuildContext context, int index) {
           final category = categories[index];
           return ChipWidget(label: category, category: category);
         },
+      ),
+    );
+  }
+}
+
+class _FloatingActionButton extends StatelessWidget {
+  const _FloatingActionButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      child: const Icon(
+        Icons.qr_code,
+        color: Colors.white,
       ),
     );
   }
@@ -69,12 +86,13 @@ class CoffeListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GridView.builder(
+        padding: EdgeInsets.zero,
         scrollDirection: Axis.vertical,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 0.9),
-        itemCount: coffeeList.length,
+        itemCount: CoffeeProvider().coffeeList.length,
         itemBuilder: (BuildContext context, int index) {
-          final coffee = coffeeList[index];
+          final coffee = CoffeeProvider().getCoffee(index);
           return CardWidget(
             imgPath: 'assets/${coffee.name.toLowerCase()}_coffe_cup.jpg',
             coffeName: coffee.name,

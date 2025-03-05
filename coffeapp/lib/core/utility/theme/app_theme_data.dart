@@ -7,8 +7,22 @@ class AppTheme {
   }
 
   ThemeData themeData = ThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: ColorConstants.beige,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(22),
+        ),
+      ),
       cardTheme: const CardTheme(
         color: ColorConstants.offWhite,
+      ),
+      toggleButtonsTheme: ToggleButtonsThemeData(
+        borderRadius: BorderRadius.circular(12),
+        borderColor: ColorConstants.beige,
+        selectedBorderColor: ColorConstants.beige,
+        fillColor: ColorConstants.beige,
+        color: ColorConstants.beige,
+        selectedColor: Colors.white,
       ),
       chipTheme: const ChipThemeData(
           side: BorderSide(color: ColorConstants.beige),

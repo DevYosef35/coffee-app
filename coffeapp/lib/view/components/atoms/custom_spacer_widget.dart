@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomSpacer extends StatelessWidget {
-  const CustomSpacer({
-    super.key,
-  });
-
+  CustomSpacer({super.key, this.height});
+  double? height = 38.0;
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 38,
+    return SizedBox(
+      height: height,
     );
   }
 }

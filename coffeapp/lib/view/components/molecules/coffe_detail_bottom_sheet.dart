@@ -54,8 +54,8 @@ class _BottomSheetActions extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ShoppingCartView()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const ShoppingCartView()));
           },
           style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(const Size(217, 55)),

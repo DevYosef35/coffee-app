@@ -1,6 +1,8 @@
 import 'package:coffeapp/core/utility/theme/app_theme_data.dart';
 import 'package:coffeapp/view/home_view.dart';
+import 'package:coffeapp/view/profile_view.dart';
 import 'package:coffeapp/viewmodel/card_quantity_view_model.dart';
+import 'package:coffeapp/viewmodel/coffe_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +10,7 @@ import 'viewmodel/card_view_model.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<CoffeeProvider>(create: (_) => CoffeeProvider()),
     ChangeNotifierProvider<CardQuantityViewModel>(
         create: (_) => CardQuantityViewModel()),
     ChangeNotifierProvider<CardViewModel>(create: (_) => CardViewModel()),
@@ -21,6 +24,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         theme: AppTheme().themeData,
         debugShowCheckedModeBanner: false,
-        home: const HomeView());
+        home: ProfilePage());
   }
 }

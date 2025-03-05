@@ -9,4 +9,6 @@ class PaddingConstant {
       horizontal: 16.0, vertical: 20.0); //  Ekran genelindeki padding
   static const EdgeInsets buttonPadding =
       EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0); //  Buton padding
+  static const EdgeInsets toggleButtonPadding = EdgeInsets.symmetric(
+      vertical: 10.0, horizontal: 16.0); //  Toggle buton padding
 }

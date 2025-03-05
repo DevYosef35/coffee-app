@@ -1,7 +1,5 @@
-import 'package:coffeapp/core/utility/constant/color_constant.dart';
-import 'package:coffeapp/core/utility/constant/string_constant.dart';
-import 'package:coffeapp/view/components/atoms/custom_button.dart';
-import 'package:coffeapp/view/components/atoms/custom_spacer_widget.dart';
+import 'package:coffeapp/core/utility/utility.dart';
+import 'components/components.dart';
 import 'package:coffeapp/view/home_view.dart';
 import 'package:flutter/material.dart';
 
@@ -17,20 +15,20 @@ class OrderView extends StatefulWidget {
 class _OrderViewState extends State<OrderView> {
   @override
   Widget build(BuildContext context) {
+    const double height = 38;
     return Scaffold(
-      backgroundColor: ColorConstants.offWhite,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(widget.imgPath),
-          const CustomSpacer(),
-          Text(
+          CustomSpacer(),
+          HeadlineSmallText(
             StringConstant.orderReceivedText,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: ColorConstants.darkBrown, fontWeight: FontWeight.bold),
           ),
           Text(StringConstant.orderingText),
-          const CustomSpacer(),
+          CustomSpacer(
+            height: height,
+          ),
           CustomButton(
             navigatorWidget: const HomeView(),
             buttonText: StringConstant.returnToHomePageText,
