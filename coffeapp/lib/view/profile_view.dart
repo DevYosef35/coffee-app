@@ -7,7 +7,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profilim'),
+        title: Text(StringConstant.profile),
       ),
       body: SingleChildScrollView(
         child: Column(
