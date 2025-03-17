@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96218340172",
+    "project_id": "robobrewbetaapp",
+    "storage_bucket": "robobrewbetaapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96218340172:android:f3cdfb2998813e8c208de9",
+        "android_client_info": {
+          "package_name": "com.example.coffeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqan-ccv0ewJpRo_U3oZz8WN8-NcXAeno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,25 +21,27 @@ class _OrderTypeToggleState extends State<OrderTypeToggle> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         HeadlineSmallText(StringConstant.orderTypeText),
-        ToggleButtons(
-            isSelected: isSlected,
-            onPressed: (int index) {
-              setState(() {
-                for (int i = 0; i < isSlected.length; i++) {
-                  isSlected[i] = i == index;
-                }
-              });
-            },
-            children: [
-              Padding(
-                padding: PaddingConstant.toggleButtonPadding,
-                child: Text(StringConstant.preOrderText),
-              ),
-              Padding(
-                padding: PaddingConstant.toggleButtonPadding,
-                child: Text(StringConstant.inPlaceOrderText),
-              )
-            ]),
+        Center(
+          child: ToggleButtons(
+              isSelected: isSlected,
+              onPressed: (int index) {
+                setState(() {
+                  for (int i = 0; i < isSlected.length; i++) {
+                    isSlected[i] = i == index;
+                  }
+                });
+              },
+              children: [
+                Padding(
+                  padding: PaddingConstant.toggleButtonPadding,
+                  child: Text(StringConstant.preOrderText),
+                ),
+                Padding(
+                  padding: PaddingConstant.toggleButtonPadding,
+                  child: Text(StringConstant.inPlaceOrderText),
+                )
+              ]),
+        ),
         const Divider()
       ],
     );

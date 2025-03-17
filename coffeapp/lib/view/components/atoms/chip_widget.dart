@@ -1,30 +1,42 @@
-import 'package:coffeapp/viewmodel/card_view_model.dart';
-import 'package:coffeapp/viewmodel/coffe_list_provider.dart';
+import 'package:coffeapp/model/coffe_type.dart';
+import 'package:coffeapp/viewmodel/coffe_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChipWidget extends StatelessWidget {
-  const ChipWidget({super.key, required this.label, required this.category});
+class CardChipWidget extends StatelessWidget {
+  const CardChipWidget({
+    super.key,
+    required this.type,
+  });
 
-  final String label;
-  final String category;
+  final CoffeeType type;
 
   @override
   Widget build(BuildContext context) {
-    final cardViewModel = Provider.of<CardViewModel>(context);
-    final coffeSorting = Provider.of<CoffeeProvider>(context);
-    final categories =
-        coffeSorting.coffeeList.map((coffee) => coffee.name).toList();
+    final coffeeProvider = Provider.of<CoffeeProvider>(context);
     return ChoiceChip(
-      label: Text(label),
-      selected: coffeSorting.selectedCategory == category,
+      label: Text(_typeToText(type)),
+      selected: coffeeProvider.selectedType == type,
       onSelected: (isSelected) {
         if (isSelected) {
-          coffeSorting.selectCategory(category);
-        } else {
-          coffeSorting.selectCategory("");
+          coffeeProvider.selectCategory(type);
         }
       },
     );
+  }
+
+  String _typeToText(CoffeeType type) {
+    switch (type) {
+      case CoffeeType.espresso:
+        return "Espresso";
+      case CoffeeType.latte:
+        return "Latte";
+      case CoffeeType.americano:
+        return "Americano";
+      case CoffeeType.cappuccino:
+        return "Cappuccino";
+      case CoffeeType.all:
+        return "Hepsi";
+    }
   }
 }

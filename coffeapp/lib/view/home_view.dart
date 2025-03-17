@@ -1,9 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:coffeapp/view/components/components.dart';
 import 'package:coffeapp/core/utility/utility.dart';
-import 'package:coffeapp/viewmodel/coffe_list_provider.dart';
+import 'package:coffeapp/view/components/molecules/custom_floating_action_button.dart';
+import 'package:coffeapp/view/components/molecules/filtrations_buttons.dart';
+import 'package:coffeapp/view/components/organism/coffee_list_view.dart';
 import 'package:coffeapp/viewmodel/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+@RoutePage()
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -11,94 +16,104 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with HomeViewModel {
+class _HomeViewState extends State<HomeView> {
+  late final HomeViewModel viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel = HomeViewModel();
+  }
+
+  Widget _buildOffstageNavigator({
+    required GlobalKey<NavigatorState> navigatorKey,
+    required bool isActive,
+    required Widget child,
+  }) {
+    return Offstage(
+      offstage: !isActive,
+      child: Navigator(
+        key: navigatorKey,
+        onGenerateRoute: (_) => MaterialPageRoute(builder: (_) => child),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: const _FloatingActionButton(),
-      bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
-            onItemTapped(index);
-          },
-          currentIndex: selectedIndex,
-          selectedItemColor: ColorConstants.beige,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag),
-              label: "",
+    return ChangeNotifierProvider.value(
+      value: viewModel,
+      child: Consumer<HomeViewModel>(
+        builder: (context, viewModel, _) => Scaffold(
+          floatingActionButton: const CustomFloatingActionButton(),
+          bottomNavigationBar: _CustomBottomNavigationBar(viewModel: viewModel),
+          appBar: AppBar(
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                child: Image.asset('assets/app_icon.png'),
+                radius: 100,
+              ), // app icon
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_box), label: "Cart"),
-          ]),
-      body: Padding(
-        padding: AppTheme.getSafePadding(context),
-        child: Column(
-          children: [
-            const PromotionBanner(),
-            _filtrationButtons(context),
-            const CoffeListView(),
-          ],
+            title: TextField(
+              onChanged: (value) {},
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.qr_code_scanner),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          body: Stack(
+            children: List.generate(viewModel.tabs.length, (index) {
+              return _buildOffstageNavigator(
+                navigatorKey: viewModel.getNavigatorKey(index),
+                isActive: viewModel.isActiveTab(index),
+                child: viewModel.tabs[index],
+              );
+            }),
+          ),
         ),
       ),
     );
   }
+}
 
-  SizedBox _filtrationButtons(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.07,
-      child: ListView.separated(
-        padding: PaddingConstant.chipSpacing,
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        separatorBuilder: (context, index) => const SizedBox(
-            width: 8.0), // Chip'ler arasındaki boşluğu 8.0 olarak ayarla
-        itemBuilder: (BuildContext context, int index) {
-          final category = categories[index];
-          return ChipWidget(label: category, category: category);
-        },
-      ),
+class _CustomBottomNavigationBar extends StatelessWidget {
+  final HomeViewModel viewModel;
+
+  const _CustomBottomNavigationBar({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      onTap: viewModel.onItemTapped,
+      currentIndex: viewModel.selectedIndex,
+      selectedItemColor: ColorConstants.beige,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Cart"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.account_box), label: "Profile"),
+      ],
     );
   }
 }
 
-class _FloatingActionButton extends StatelessWidget {
-  const _FloatingActionButton();
+class HomeTabView extends StatelessWidget {
+  const HomeTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {},
-      child: const Icon(
-        Icons.qr_code,
-        color: Colors.white,
-      ),
-    );
-  }
-}
-
-class CoffeListView extends StatelessWidget {
-  const CoffeListView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-        padding: EdgeInsets.zero,
-        scrollDirection: Axis.vertical,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 0.9),
-        itemCount: CoffeeProvider().coffeeList.length,
-        itemBuilder: (BuildContext context, int index) {
-          final coffee = CoffeeProvider().getCoffee(index);
-          return CardWidget(
-            imgPath: 'assets/${coffee.name.toLowerCase()}_coffe_cup.jpg',
-            coffeName: coffee.name,
-            coffePrice: coffee.price,
-          );
-        },
+    return Padding(
+      padding: AppTheme.getSafePadding(context),
+      child: const Column(
+        children: [
+          PromotionBanner(),
+          FiltrationsButtons(),
+          CoffeListView(),
+        ],
       ),
     );
   }

@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CardQuantityButton extends StatelessWidget {
-  const CardQuantityButton({super.key});
+  final String coffeeName;
+  const CardQuantityButton({super.key, required this.coffeeName});
 
   @override
   Widget build(BuildContext context) {
     final quantityProvider = Provider.of<CardQuantityViewModel>(context);
+    final quantity = quantityProvider.getQuantity(coffeeName);
 
     return Row(
       children: [
         IconButton(
-          onPressed: quantityProvider.decrement,
+          onPressed: () => quantityProvider.decrement(coffeeName),
           icon: const Icon(Icons.remove),
         ),
-        Text(quantityProvider.quantity.toString()),
+        Text(quantity.toString()),
         IconButton(
-          onPressed: quantityProvider.increment,
+          onPressed: () => quantityProvider.increment(coffeeName),
           icon: const Icon(Icons.add),
         ),
       ],

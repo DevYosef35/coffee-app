@@ -1,4 +1,5 @@
 enum CoffeeType {
+  all,
   americano,
   espresso,
   latte,

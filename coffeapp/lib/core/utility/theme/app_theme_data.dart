@@ -7,6 +7,13 @@ class AppTheme {
   }
 
   ThemeData themeData = ThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+      ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: ColorConstants.beige,
         shape: RoundedRectangleBorder(
@@ -14,6 +21,7 @@ class AppTheme {
         ),
       ),
       cardTheme: const CardTheme(
+        elevation: 4,
         color: ColorConstants.offWhite,
       ),
       toggleButtonsTheme: ToggleButtonsThemeData(
