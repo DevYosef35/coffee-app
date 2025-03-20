@@ -23,6 +23,9 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     viewModel = HomeViewModel();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewModel.initialize(context);
+    });
   }
 
   Widget _buildOffstageNavigator({
@@ -47,24 +50,6 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, viewModel, _) => Scaffold(
           floatingActionButton: const CustomFloatingActionButton(),
           bottomNavigationBar: _CustomBottomNavigationBar(viewModel: viewModel),
-          appBar: AppBar(
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                child: Image.asset('assets/app_icon.png'),
-                radius: 100,
-              ), // app icon
-            ),
-            title: TextField(
-              onChanged: (value) {},
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.qr_code_scanner),
-                onPressed: () {},
-              ),
-            ],
-          ),
           body: Stack(
             children: List.generate(viewModel.tabs.length, (index) {
               return _buildOffstageNavigator(
@@ -92,10 +77,9 @@ class _CustomBottomNavigationBar extends StatelessWidget {
       currentIndex: viewModel.selectedIndex,
       selectedItemColor: ColorConstants.beige,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Cart"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.account_box), label: "Profile"),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Anasayfa"),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Sepet"),
+        BottomNavigationBarItem(icon: Icon(Icons.account_box), label: "Profil"),
       ],
     );
   }
@@ -106,6 +90,7 @@ class HomeTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //  final products = productProvider.products;
     return Padding(
       padding: AppTheme.getSafePadding(context),
       child: const Column(

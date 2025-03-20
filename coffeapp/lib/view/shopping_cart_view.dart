@@ -9,6 +9,8 @@ import 'package:coffeapp/viewmodel/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/organism/organisms_widgets.dart';
+
 @RoutePage()
 class ShoppingCartView extends StatelessWidget {
   const ShoppingCartView({super.key});
@@ -30,14 +32,16 @@ class _ViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const OrderDetails(),
-        const OrderTypeToggle(),
-        CustomButton(
-            navigatorWidget: () => context.pushRoute(const OrderRoute()),
-            buttonText: StringConstant.takeOrderText)
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const OrderDetails(),
+          const OrderTypeToggle(),
+          CustomButton(
+              navigatorWidget: () => context.pushRoute(const OrderRoute()),
+              buttonText: StringConstant.takeOrderText)
+        ],
+      ),
     );
   }
 }

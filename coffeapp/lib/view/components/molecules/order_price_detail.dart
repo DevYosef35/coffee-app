@@ -1,7 +1,6 @@
 import 'package:coffeapp/core/utility/constant/constant.dart';
 import 'package:coffeapp/view/components/components.dart';
-import 'package:coffeapp/viewmodel/card_quantity_view_model.dart';
-import 'package:coffeapp/viewmodel/coffe_provider.dart';
+import 'package:coffeapp/viewmodel/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,44 +9,43 @@ class OrderPriceDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final coffee = Provider.of<CoffeeProvider>(context).manuallySelectedCoffee;
-    final coffeeName = coffee?.name;
-    final quantity =
-        Provider.of<CardQuantityViewModel>(context).getQuantity(coffeeName!);
+    final cartItems = context.watch<CartViewModel>().cart;
 
-    if (coffee == null) {
-      return const SizedBox.shrink();
-    }
-
-    final coffeePrice = coffee.price;
-    final totalPrice = coffeePrice * quantity;
+    final double subtotal =
+        cartItems.fold(0, (sum, item) => sum + item.quantity * item.price);
+    final double tax = subtotal * 0.2;
+    const double extras = 0.0; // Şimdilik boş, ileride eklenecek
+    final double total = subtotal + tax + extras;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         HeadlineSmallText(StringConstant.orderAmountText),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(StringConstant.totalAmountText),
-            Text(totalPrice.toString())
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(StringConstant.extrasText),
-            Text(coffeePrice.toString())
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(StringConstant.taxesText),
-            Text((coffeePrice * 0.2).toString())
-          ],
-        ),
+        _PriceRow(label: StringConstant.totalAmountText, value: total),
+        _PriceRow(label: StringConstant.extrasText, value: extras),
+        _PriceRow(label: StringConstant.taxesText, value: tax),
       ],
+    );
+  }
+}
+
+class _PriceRow extends StatelessWidget {
+  final String label;
+  final double value;
+
+  const _PriceRow({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label),
+          Text('₺${value.toStringAsFixed(2)}'),
+        ],
+      ),
     );
   }
 }

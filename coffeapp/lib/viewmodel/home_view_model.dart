@@ -1,7 +1,9 @@
 import 'package:coffeapp/view/home_view.dart';
 import 'package:coffeapp/view/profile_view.dart';
 import 'package:coffeapp/view/shopping_cart_view.dart';
+import 'package:coffeapp/viewmodel/product_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final List<GlobalKey<NavigatorState>> navigatorKeys =
@@ -19,6 +21,10 @@ class HomeViewModel extends ChangeNotifier {
   void onItemTapped(int index) {
     _selectedIndex = index;
     notifyListeners();
+  }
+
+  void initialize(BuildContext context) {
+    Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
   }
 
   bool isActiveTab(int index) => _selectedIndex == index;

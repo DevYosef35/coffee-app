@@ -24,7 +24,7 @@ abstract class _$AppRouter extends RootStackRouter {
     MyCustomRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MyCustomView(),
+        child: const AuthView(),
       );
     },
     OrderRoute.name: (routeData) {
