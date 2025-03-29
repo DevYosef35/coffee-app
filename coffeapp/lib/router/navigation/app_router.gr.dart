@@ -11,20 +11,28 @@ part of 'app_router.dart';
 
 abstract class _$AppRouter extends RootStackRouter {
   // ignore: unused_element
-  _$AppRouter();
+  _$AppRouter({super.navigatorKey});
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AuthRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AuthView(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const HomeView(),
       );
     },
-    MyCustomRoute.name: (routeData) {
+    OnboardingRoute.name: (routeData) {
+      final args = routeData.argsAs<OnboardingRouteArgs>(
+          orElse: () => const OnboardingRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const AuthView(),
+        child: OnboardingView(key: args.key),
       );
     },
     OrderRoute.name: (routeData) {
@@ -45,7 +53,27 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ShoppingCartView(),
       );
     },
+    SplashRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SplashView(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [AuthView]
+class AuthRoute extends PageRouteInfo<void> {
+  const AuthRoute({List<PageRouteInfo>? children})
+      : super(
+          AuthRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -63,17 +91,32 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [MyCustomView]
-class MyCustomRoute extends PageRouteInfo<void> {
-  const MyCustomRoute({List<PageRouteInfo>? children})
-      : super(
-          MyCustomRoute.name,
+/// [OnboardingView]
+class OnboardingRoute extends PageRouteInfo<OnboardingRouteArgs> {
+  OnboardingRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OnboardingRoute.name,
+          args: OnboardingRouteArgs(key: key),
           initialChildren: children,
         );
 
-  static const String name = 'MyCustomRoute';
+  static const String name = 'OnboardingRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<OnboardingRouteArgs> page =
+      PageInfo<OnboardingRouteArgs>(name);
+}
+
+class OnboardingRouteArgs {
+  const OnboardingRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'OnboardingRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -114,6 +157,20 @@ class ShoppingCartRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ShoppingCartRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SplashView]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

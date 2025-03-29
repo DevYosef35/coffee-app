@@ -16,6 +16,20 @@ class ProductProvider with ChangeNotifier {
   List<ProductModel> get products => _filteredProducts;
   bool get isLoading => _isLoading;
   String? get selectedCategory => _selectedid;
+  String? _selectedSize;
+  String? get selectedSize => _selectedSize;
+
+  void selectSize(String size) {
+    _selectedSize = size;
+    notifyListeners();
+  }
+
+  double getSelectedPrice(ProductModel product) {
+    if (_selectedSize != null && product.sizes.containsKey(_selectedSize)) {
+      return product.sizes[_selectedSize]!;
+    }
+    return product.basePrice;
+  }
 
   // Tüm ürünleri Firestore'dan çek
   Future<void> fetchAllProducts() async {

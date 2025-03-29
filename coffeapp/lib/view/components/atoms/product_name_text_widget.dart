@@ -11,7 +11,9 @@ class ProductNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: ColorConstants.darkBrown, fontWeight: FontWeight.bold));
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(color: ColorConstants.darkBrown));
   }
 }

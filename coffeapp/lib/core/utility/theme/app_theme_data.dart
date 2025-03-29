@@ -10,9 +10,11 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: ColorConstants.darkBrown)),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: ColorConstants.beige,

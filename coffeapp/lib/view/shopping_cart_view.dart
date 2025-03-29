@@ -37,9 +37,12 @@ class _ViewWidget extends StatelessWidget {
         children: [
           const OrderDetails(),
           const OrderTypeToggle(),
-          CustomButton(
-              navigatorWidget: () => context.pushRoute(const OrderRoute()),
-              buttonText: StringConstant.takeOrderText)
+          Padding(
+            padding: const EdgeInsets.only(top: 164.0),
+            child: CustomButton(
+                navigatorWidget: () => context.pushRoute(const OrderRoute()),
+                buttonText: StringConstant.takeOrderText),
+          )
         ],
       ),
     );

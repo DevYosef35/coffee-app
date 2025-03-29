@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
       value: viewModel,
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, _) => Scaffold(
-          floatingActionButton: const CustomFloatingActionButton(),
+          //floatingActionButton: const CustomFloatingActionButton(),
           bottomNavigationBar: _CustomBottomNavigationBar(viewModel: viewModel),
           body: Stack(
             children: List.generate(viewModel.tabs.length, (index) {

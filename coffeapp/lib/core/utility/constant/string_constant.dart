@@ -20,8 +20,15 @@ class StringConstant {
   static const String _logOut = "Çıkış Yap";
   static const String _profile = 'Profilim';
   static const String _savedCards = "Kartlarım";
-
+  static const String _onBoardingTitleQuality = "Her Yudumda Aynı Kalite ";
+  static const String _onBoardingTitleTime = "Zaman Kazan, Ödül Kazan ";
+  static const String _onBoardingTitleSpecs = "Senin Damak Zevkine Özel ";
+  static const String _skip = "Atla";
   // Public getter'lar
+  static String get skip => _skip;
+  static String get onBoardingTitleQuality => _onBoardingTitleQuality;
+  static String get onBoardingTitleTime => _onBoardingTitleTime;
+  static String get onBoardingTitleSpecs => _onBoardingTitleSpecs;
   static String get savedCards => _savedCards;
   static String get profile => _profile;
   static String get logOut => _logOut;

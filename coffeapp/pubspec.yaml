@@ -45,6 +45,7 @@ dependencies:
 
   cloud_firestore: ^5.4.0
   kartal: ^4.0.4
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:
